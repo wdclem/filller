@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/09 15:09:22 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:00:07 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ static int	player_info(t_info *info)
 
 	stdo = NULL;
 	get_next_line(0, &stdo);
-	get_next_line(0, &stdo);
+	*stdo = get_next_line(0, &stdo);
 	ft_printf("%s", stdo);
 	info->player = ft_atoi(&stdo[10]);
+	fprintf(stderr , "tu as un gros loulou");
 	return (0); //tutto va bene need to make error checks ?
 }
 
@@ -50,17 +51,25 @@ static int	map_info(t_info *info)
 
 	stdo = NULL;
 	get_next_line(0, &stdo);
+	fprintf(stderr , "tu as un gros loulou");
 	ft_printf("%s", stdo);
 	info->col = ft_atoi(&stdo[8]);
-	info->row = ft_atoi(&stdo[11]);
+	info->row = ft_atoi(&stdo[11]);//adjust stdo to numblen
 	return (0); //tutto va bene need to make error checks ?
 	// can probably check with stdo[0] == "P"
 }
-
+/*
 static int	pieces_info(t_info *info)
 {
+	char	*stdo;
 
-
+	stdo = NULL;
+	stdo = get_next_line(0, &stdo);
+	while (stdo[0] != "*" || stdo[0] != ".")
+		get_next_line(0, &stdo);
+	return (0); 
+}
+*/
 /*
 int	player_info(t_info *info)
 {
@@ -71,6 +80,8 @@ int	player_info(t_info *info)
 
 int	main(int argc, char **argv)
 {
+	fprintf(stderr , "tu as un gros loulou");
+	fprintf(stderr, "smth");
 	//int		check;
 	//int		valid;
 	t_info	info;
@@ -95,7 +106,7 @@ int	main(int argc, char **argv)
 	*/
 	player_info(&info);
 	map_info(&info);
-	pieces_info;
+	//pieces_info;
 /*	if (valid_map)
 	get_info;
 		ok;
