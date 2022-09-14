@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:15:04 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/08 10:47:44 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/13 09:59:32 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BUFF_SIZE 8
+# define BUFF_SIZE 1 
 # define FD_SIZE 4096
 
 typedef struct s_list

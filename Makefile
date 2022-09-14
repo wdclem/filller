@@ -6,7 +6,7 @@
 #    By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 10:28:45 by ccariou           #+#    #+#              #
-#    Updated: 2022/09/09 12:34:36 by ccariou          ###   ########.fr        #
+#    Updated: 2022/09/12 12:33:15 by ccariou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,14 @@ LFT = -L ./libft/ -lft
 
 # SOURCES FILES 
 SRC_DIR = ./srcs/
-SRCS = main.c\
+SRCS = main.c \
 
-INC = -I ./includes -I ./libft/includes
+INC = -I ./includes
+INC_LFT = -I ./libft/includes 
 
 #OBJECTS
 OBJ_DIR = ./object/
-OBJ = $(addprefix $(SRC_DIR), $(SRCS))
+OBJ = $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 
 all: $(NAME) 
 
@@ -34,7 +35,7 @@ $(NAME): $(OBJ)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	 @ mkdir -p $(OBJ_DIR)
-	 @ $(CC) $(FLAGS) $(INC) -o $@ -c $<
+	 @ $(CC) $(FLAGS) $(INC_LIBFT) $(INC) -o $@ -c $<
 
 lib:
 	@ make -sC ./libft/ all

@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/09 18:00:07 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/14 09:58:06 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,85 @@ static int	player_info(t_info *info)
 	char	*stdo;
 
 	stdo = NULL;
+//	get_next_line(0, &stdo);
 	get_next_line(0, &stdo);
-	*stdo = get_next_line(0, &stdo);
-	ft_printf("%s", stdo);
+	ft_printf("stdo == %s\n", stdo);
 	info->player = ft_atoi(&stdo[10]);
-	fprintf(stderr , "tu as un gros loulou");
+	fprintf(stderr , "info->player = %d\n", info->player);
+	fprintf(stderr , "tu as un gros loulou\n");
 	return (0); //tutto va bene need to make error checks ?
 }
 
 static int	map_info(t_info *info)
 {
 	char	*stdo;
+	int		i;
 
 	stdo = NULL;
+	i = 0;
 	get_next_line(0, &stdo);
-	fprintf(stderr , "tu as un gros loulou");
-	ft_printf("%s", stdo);
-	info->col = ft_atoi(&stdo[8]);
-	info->row = ft_atoi(&stdo[11]);//adjust stdo to numblen
+	fprintf(stderr , "tu as un grosse map\n\n");
+	fprintf(stderr, "mapinfo stdo ==  %s\n\n", stdo);
+	info->row  = ft_atoi(&stdo[8]);
+	fprintf(stderr , "info->row= %d\n", info->row);
+	info->col = ft_atoi(&stdo[11]);//adjust stdo to numblen
+	fprintf(stderr , "info->col= %d\n", info->col);
+	while (i <= info->row)
+	{
+		get_next_line(0, &stdo);
+		fprintf(stderr, "mapinfo stdo ==  %s\n\n", stdo);
+		i++;
+	}
 	return (0); //tutto va bene need to make error checks ?
 	// can probably check with stdo[0] == "P"
 }
-/*
+
 static int	pieces_info(t_info *info)
 {
-	char	*stdo;
+	char	*line;
+	int		i;
+//	int 	col;
+	int		size;
+	int		row;
 
-	stdo = NULL;
-	stdo = get_next_line(0, &stdo);
+	line = NULL;
+	i = 0;
+//	col = info->col;
+
+	//*line =	get_next_line(0, &line);
+	//fprintf(stderr, "pieces_info stdo ==  %s\n\n", line);
+	get_next_line(0, &line);
+	fprintf(stderr, "piece_info stdo ==  %s\n\n", line);
+	info->piecerow = ft_atoi(&line[6]);
+	fprintf(stderr , "info->piecerow= %d\n", info->piecerow);
+	info->piececol= ft_atoi(&line[8]);//adjust stdo to numblen
+	fprintf(stderr , "info->piececol= %d\n", info->piececol);
+	row = info->piecerow;
+	size = row;
+	info->piece = malloc((info->piecerow * info->piececol) * sizeof(int));
+	while (i < size)
+	{
+		fprintf(stderr , "tu as un gros piece mon loulou\n\n");
+		get_next_line(0, &line);	
+		fprintf(stderr, "piece_info stdo ==  %s\n\n", line);
+		info->piece[i] = ft_strdup(line);
+		// check to remove the row number
+	//	fprintf(stderr , "info->piece = %s\n", info->piece[i]);
+		i++;
+	}
+	i = 0;
+	while (i < size)
+	{
+		fprintf(stderr , "info->piece = %s\n", info->piece[i]);
+		i++;
+	}
+	/*
 	while (stdo[0] != "*" || stdo[0] != ".")
 		get_next_line(0, &stdo);
+	*/
 	return (0); 
 }
-*/
+
 /*
 int	player_info(t_info *info)
 {
@@ -80,14 +126,13 @@ int	player_info(t_info *info)
 
 int	main(int argc, char **argv)
 {
-	fprintf(stderr , "tu as un gros loulou");
-	fprintf(stderr, "smth");
 	//int		check;
 	//int		valid;
 	t_info	info;
-	char	*line;
+//	char	*line;
 
-	line = NULL;
+//	line = NULL;
+//	if piece free piece
 	if (!argc || !argv)
 		ft_printf("oalala no argc");
 	/* PROBABLY NOT NEEDED 
@@ -106,7 +151,7 @@ int	main(int argc, char **argv)
 	*/
 	player_info(&info);
 	map_info(&info);
-	//pieces_info;
+	pieces_info(&info);
 /*	if (valid_map)
 	get_info;
 		ok;
