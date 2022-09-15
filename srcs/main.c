@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/15 10:16:30 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/15 10:20:04 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	map_info(t_info *info)
 	while (i < info->row)
 	{
 		get_next_line(0, &stdo);
-		info->map[i] = ft_strsub(stdo, 4 , info->row);
+		info->map[i] = ft_strsub(stdo, 4 , info->col);
 		fprintf(stderr, "mapinfo stdo ==  %s\n\n", info->map[i]);
 		i++;
 	}
