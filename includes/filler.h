@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:51:35 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/12 14:52:41 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/14 10:45:10 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_info{
 				int		piecerow;
 				int		piececol;
 				char	**piece;
+				char	**map;
 }				t_info;
 
 

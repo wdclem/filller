@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/14 09:58:06 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/15 10:16:30 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,21 @@ void	create_map(t_info *info)
 static int	player_info(t_info *info)
 {
 	char	*stdo;
+	int		player;
 
 	stdo = NULL;
 //	get_next_line(0, &stdo);
 	get_next_line(0, &stdo);
 	ft_printf("stdo == %s\n", stdo);
-	info->player = ft_atoi(&stdo[10]);
-	fprintf(stderr , "info->player = %d\n", info->player);
-	fprintf(stderr , "tu as un gros loulou\n");
+	player = ft_atoi(&stdo[10]);
+	if (player == '1')
+		info->player = 'o'; 
+	else if (player == '2')
+		info->player = 'x'; 
+	else
+		return (1);
+//	fprintf(stderr , "info->player = %d\n", info->player);
+//	fprintf(stderr , "tu as un gros loulou\n");
 	return (0); //tutto va bene need to make error checks ?
 }
 
@@ -60,10 +67,13 @@ static int	map_info(t_info *info)
 	fprintf(stderr , "info->row= %d\n", info->row);
 	info->col = ft_atoi(&stdo[11]);//adjust stdo to numblen
 	fprintf(stderr , "info->col= %d\n", info->col);
-	while (i <= info->row)
+	get_next_line(0, &stdo);
+	info->map = malloc((info->row + 1) * sizeof(int));
+	while (i < info->row)
 	{
 		get_next_line(0, &stdo);
-		fprintf(stderr, "mapinfo stdo ==  %s\n\n", stdo);
+		info->map[i] = ft_strsub(stdo, 4 , info->row);
+		fprintf(stderr, "mapinfo stdo ==  %s\n\n", info->map[i]);
 		i++;
 	}
 	return (0); //tutto va bene need to make error checks ?
