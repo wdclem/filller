@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:48:15 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/17 11:22:40 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/17 13:16:24 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	player_info(t_info *info)
 int	map_info(t_info *info)
 {
 	char	*stdo;
+//	char	*line;
 	int		i;
 	int		x;
 	int		y;
@@ -52,31 +53,43 @@ int	map_info(t_info *info)
 	info->col = ft_atoi(&stdo[11]);//adjust stdo to numblen
 	fprintf(stderr , "info->col= %d\n", info->col);
 	get_next_line(0, &stdo);
+	ft_strdel(&stdo);
+	get_next_line(0, &stdo);
 	info->map = (int **)malloc(sizeof(int *) * info->row);
 	y  = 0;
+//	info->map[y] = (int*)malloc(sizeof(int) * info->col);
 	while (y  < info->row)
 	{
+		info->map[y] = (int*)malloc(sizeof(int) * info->col);
 		x = 0;
+//		line  = ft_strsub(stdo, 4 , info->col);
 //		fprintf(stderr , "infiltre 1\n");
 		while (x < info->col)
 		{
-			info->map[y] = (int*)malloc(sizeof(int) * info->col);
-//			ft_memset(map[y], 0, sizeof(info->col));
-			fprintf(stderr , "enemy = %c map = %c\n", info->enemy, info->map[y][x]);
+	//		info->map[y] = (int*)malloc(sizeof(int) * info->col);
+//			ft_memset(info->map[y], 0, sizeof(info->col));
+//			fprintf(stderr , "enemy = %c map = %c\n", info->enemy, line[x]);
 			if (stdo[x + 4] == info->enemy) 
 			{
-				fprintf(stderr, "hello\n");
+//				fprintf(stderr, "hello\n");
 				info->map[y][x] = 1;
 			}
-			else if (info->map[y][x] == info->player) 
+			else if (stdo[x + 4] == info->player) 
 				info->map[y][x] = 2;
 			else
+			{
 				info->map[y][x] = 0;
-			fprintf(stderr , "map = %c\n", info->map[y][x]);
-			get_next_line(0, &stdo);
+//				fprintf(stderr, "culotte\n");
+			}
+//			fprintf(stderr , "map = %c\n", info->map[y][x]);
+//			fprintf(stderr , "map = %s\n", stdo);
+			fprintf(stderr , "x = %d\n", x);
+			fprintf(stderr , "y = %d\n", y);
 			x++;
 		}
-
+		ft_strdel(&stdo);
+//		free(line);
+		get_next_line(0, &stdo);
 		y++;
 	}
 	i = 0;
@@ -85,12 +98,13 @@ int	map_info(t_info *info)
 		j = 0;
 		while (j < info->col)
 		{
-			fprintf(stderr, "%d ", info->map[i][j]);
+			fprintf(stderr, "%d", info->map[i][j]);
 			j++;
 		}
 		fprintf(stderr, "\n");
 		i++;
 	}
+
 	return (0);
 }
 //	heat_map_init(info, map);
