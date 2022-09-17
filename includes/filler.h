@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:51:35 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/17 11:23:12 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/17 15:26:22 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ typedef struct	s_plateau{
 int	main(int argc, char **argv);
 int	player_info(t_info *info);	
 int	map_info(t_info *info);
-int	pieces_info();
-void	copy_map(t_info *info);
-void    heat_map_init(t_info *info, int **map);
+int	piece_info();
+void    heat_map_init(t_info *info);
+int	heat_map_fill(t_info *info, int val, int check);
 
 
 

@@ -6,20 +6,20 @@
 #    By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 10:28:45 by ccariou           #+#    #+#              #
-#    Updated: 2022/09/12 12:33:15 by ccariou          ###   ########.fr        #
+#    Updated: 2022/09/17 15:09:40 by ccariou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ccariou.filler 
 HEAD = filler.h
 # compile specs
-FLAGS = -g -Werror -Wextra -Wall
+FLAGS = -g -Werror -Wextra -Wall -fsanitize=address
 CC = gcc
 LFT = -L ./libft/ -lft
 
 # SOURCES FILES 
 SRC_DIR = ./srcs/
-SRCS = main.c \
+SRCS = main.c get_info.c map.c get_piece.c\
 
 INC = -I ./includes
 INC_LFT = -I ./libft/includes 
