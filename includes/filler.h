@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:51:35 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/14 10:45:10 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/17 11:23:12 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,37 @@
 /* Struct to keep miscelanous infos */
 typedef struct	s_info{
 				char	*line;
-				int		player;
+				char	player;
+				char	enemy;
 				int		col;
 				int		row;
-				int		piecerow;
-				int		piececol;
-				char	**piece;
-				char	**map;
+				int		move;
+				int		**map;
 }				t_info;
 
+typedef	struct	s_piece{
+				int		col;
+				int		row;
+				char	**shape;
+}				t_piece;
+				
+
+typedef	struct	s_coord{
+				int	x;
+				int	y;
+}				t_coord;
+
+typedef struct	s_plateau{
+				char	**plateau;
+}				t_plateau;
 
 int	main(int argc, char **argv);
+int	player_info(t_info *info);	
+int	map_info(t_info *info);
+int	pieces_info();
+void	copy_map(t_info *info);
+void    heat_map_init(t_info *info, int **map);
+
+
 
 #endif
