@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:48:15 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/17 13:16:24 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/24 16:49:01 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,81 +33,119 @@ int	player_info(t_info *info)
 	}	
 	fprintf(stderr , "enemy = %c\n", info->enemy);
 	free(stdo);
-	return (0); //tutto va bene need to make error checks ?
+	return (1); //tutto va bene need to make error checks ?
 }
 
 int	map_info(t_info *info)
 {
 	char	*stdo;
-//	char	*line;
-	int		i;
+//	int		i;
 	int		x;
 	int		y;
-	int		j;
+//	int		j;
 
 	stdo = NULL;
-	i = 0;
+//	i = 0;
 	get_next_line(0, &stdo);
 	info->row  = ft_atoi(&stdo[8]);
-	fprintf(stderr , "info->row= %d\n", info->row);
+//	fprintf(stderr , "info->row= %d\n", info->row);
 	info->col = ft_atoi(&stdo[11]);//adjust stdo to numblen
-	fprintf(stderr , "info->col= %d\n", info->col);
+//	fprintf(stderr , "info->col= %d\n", info->col);
 	get_next_line(0, &stdo);
 	ft_strdel(&stdo);
 	get_next_line(0, &stdo);
-	info->map = (int **)malloc(sizeof(int *) * info->row);
+//	fprintf(stderr , "stdo = %s\n", stdo);
+	info->map = (char **)malloc(sizeof(char *) * info->row);
+	if (info->map == NULL)
+		fprintf(stderr , "bite en bois\n");
+//	fprintf(stderr , "stdo = %s\n", stdo);
 	y  = 0;
 //	info->map[y] = (int*)malloc(sizeof(int) * info->col);
-	while (y  < info->row)
+	while (y < info->row)
 	{
-		info->map[y] = (int*)malloc(sizeof(int) * info->col);
 		x = 0;
-//		line  = ft_strsub(stdo, 4 , info->col);
+		//fprintf(stderr , "stdo = %s\n", stdo);
+		info->map[y]= ft_strdup(stdo + 4);
 //		fprintf(stderr , "infiltre 1\n");
 		while (x < info->col)
 		{
+//			fprintf(stderr , "info->map [y] = %s\n", info->map[y]);
 	//		info->map[y] = (int*)malloc(sizeof(int) * info->col);
 //			ft_memset(info->map[y], 0, sizeof(info->col));
 //			fprintf(stderr , "enemy = %c map = %c\n", info->enemy, line[x]);
-			if (stdo[x + 4] == info->enemy) 
+			if (info->map[y][x] == info->enemy) 
 			{
 //				fprintf(stderr, "hello\n");
-				info->map[y][x] = 1;
+				info->heatmap[y][x] = 2000;
 			}
-			else if (stdo[x + 4] == info->player) 
-				info->map[y][x] = 2;
+			else if (info->map[y][x] == info->player) 
+				info->heatmap[y][x] = 1000;
 			else
 			{
-				info->map[y][x] = 0;
+				info->heatmap[y][x] = 100;
 //				fprintf(stderr, "culotte\n");
 			}
 //			fprintf(stderr , "map = %c\n", info->map[y][x]);
 //			fprintf(stderr , "map = %s\n", stdo);
-			fprintf(stderr , "x = %d\n", x);
-			fprintf(stderr , "y = %d\n", y);
+	//		fprintf(stderr , "x = %d\n", x);
+	//		fprintf(stderr , "y = %d\n", y);
 			x++;
 		}
 		ft_strdel(&stdo);
 //		free(line);
-		get_next_line(0, &stdo);
+		if ((y + 1) < info->row)
+			get_next_line(0, &stdo);
 		y++;
 	}
+	/*
+	i = 0;
+	while (i < info->row)
+	{
+		fprintf(stderr, "%s", info->map[i]);
+		fprintf(stderr, "\n");
+		i++;
+	}
+		fprintf(stderr, "\n");
+		fprintf(stderr, "\n");
+		fprintf(stderr, "\n");
+		fprintf(stderr, "\n");
+		*/
+	/*
 	i = 0;
 	while (i < info->row)
 	{
 		j = 0;
 		while (j < info->col)
 		{
-			fprintf(stderr, "%d", info->map[i][j]);
+			fprintf(stderr, "%d", info->heatmap[i][j]);
 			j++;
 		}
 		fprintf(stderr, "\n");
 		i++;
 	}
+	*/
+	/*
+	i = 0;
+	while (i < info->row)
+	{
+		j = 0;
+		while (j < info->col)
+		{
+			fprintf(stderr, "%d", map[i][j]);
+			if (map[i][j] > 99 || map[i][j] < 0)
+				fprintf(stderr, "  ");
+			else
+				fprintf(stderr, " ");
+			j++;
 
-	return (0);
+		}
+		fprintf(stderr, "\n");
+		i++;
+	}
+	*/
+	return (1);
 }
-//	heat_map_init(info, map);
+//	hedddat_map_init(info, map);
 /*	info->map = (char **)malloc((info->row + 1) * sizeof(char *));
 	while (i < info->row)
 	{
@@ -154,49 +192,5 @@ static int	pieces_coord(t_piece *piece)
 	fprintf(stderr, "piece_x==  %d\n\n", coord[0].x);
 	fprintf(stderr, "piece_y==  %d\n\n", coord[0].y);
 	return(0);
-}
-*/
-/*
-int	pieces_info()
-{
-	t_piece	piece;
-	char	*line;
-	int		i;
-	int		size;
-	int		row;
-
-	line = NULL;
-	i = 0;
-
-	get_next_line(0, &line);
-	fprintf(stderr, "piece_info stdo ==  %s\n\n", line);
-	piece.row = ft_atoi(&line[6]);
-	fprintf(stderr , "info->piecerow= %d\n", piece.row);
-	piece.col= ft_atoi(&line[8]);//adjust stdo to numblen
-	fprintf(stderr , "info->piececol= %d\n", piece.col);
-	row = piece.row;
-	size = row;
-	piece.shape = malloc((piece.row * piece.col) * sizeof(int));
-	while (i < size)
-	{
-//		fprintf(stderr , "tu as un gros piece mon loulou\n\n");
-		get_next_line(0, &line);
-		fprintf(stderr, "piece_info stdo ==  %s\n\n", line);
-		piece.shape[i] = ft_strdup(line);
-		// check to remove the row number
-	//	fprintf(stderr , "info->piece = %s\n", info->piece[i]);
-		i++;
-	}
-	i = 0;
-	while (i < size)
-	{
-		fprintf(stderr , "info->piece = %s\n", piece.shape[i]);
-		i++;
-	}
-//	pieces_coord(&piece);
-	*
-	while (stdo[0] != "*" || stdo[0] != ".")
-		get_next_line(0, &stdo);
-	return (0);
 }
 */

@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/16 17:47:29 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/24 16:48:37 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,95 @@ int	player_info(t_info *info)
 	who is player 1;
 	who is player 2;
 }
-*/
+void		print_position(t_filler *filler)
+{
+	if (filler->val < PLAY || filler->val >= OPPO)
+	{
+		write(1, "0 0\n", 4);
+		exit(1);
+	}
+	ft_putnbr(filler->y);
+	write(1, " ", 1);
+	ft_putnbr(filler->x);
+	write(1, "\n", 1);
+	free_cell(filler->map, filler->mapheight);
+	free_cell(filler->cell, filler->cellheight);
+}*/
+void		reset_heat(t_info *info)
+{
+	int		y;
+	int		x;
+
+	y = -1;
+	while (++y < 20)
+	{
+		x = -1;
+		while (++x < 20)
+			info->heatmap[y][x] = 100;
+	}
+}
+
+int	print_piece(t_info *info)
+{
+	fprintf(stderr, "v  = %c\n", info->v);
+	if (info->v < 1000 || info->v>= 2000)
+	{
+		write(1, "0 0\n", 4);
+		exit(1);
+	}
+	ft_putnbr(info->b_row);
+	write(1, " ", 1);
+	ft_putnbr(info->b_col);
+	write(1, "\n", 1);
+	//free everything
+	return (1);
+}
+
+int	reset_struct(t_info *info, t_piece *piece)
+{
+	piece->shape = NULL;
+	info->col = 0;
+	info->row = 0;
+	info->elem = 0;
+	info->v = 2000;
+	info->p_col = 0;
+	info->p_row = 0;
+	info->s_row = 2000;
+	info->s_col = 2000;
+	info->b_row = 0;
+	info->b_col = 0;
+	info->map = NULL;
+	
+	return (1);
+}
 
 int	main(int argc, char **argv)
 {
 	//int		check;
 	//int		valid;
-	t_info	info;
+//	int		**map;
+	t_info	*info;
+	t_piece	*piece;
+	int i;
+	int j;
+//	t_piece	*coord;
+//	int		ret;
 //	char	*line;
 
 //	line = NULL;
 //	if piece free piece
 	if (!argc || !argv)
 		ft_printf("oalala no argc");
+	if (!(info = (t_info *)malloc(sizeof(t_info))))
+		return (-1);
+//	if (!(info = (t_info *)malloc(sizeof(t_info))))
+//		return (-1);
+	if (!(piece = (t_piece*)malloc(sizeof(t_piece))))
+		return (-1);
+	//if (!(piece = add_node()))
+	//	return (-1);
+	//if (!(coord = add_node()))
+	//	return (-1);
 	/* PROBABLY NOT NEEDED 
 	if (argc != 8)
 	{
@@ -66,10 +142,60 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	*/
-	player_info(&info);
-	fprintf(stderr, "enemy = %c\n", info.enemy);
-	map_info(&info);
-//	pieces_info();
+	player_info(info);
+	fprintf(stderr, "enemy = %c\n", info->enemy);
+	while(1)
+	{
+		reset_struct(info, piece);
+		map_info(info);
+		/*
+		i = 0;
+    	while (i < info->row)
+     	{
+        	 j = 0;
+         	while (j < info->col)
+         	{
+             	fprintf(stderr, "%d", info->heatmap[i][j]);
+             	j++;
+         	}
+         	fprintf(stderr, "\n");
+         	i++;
+     	}
+		*/
+		create_heat_map(info);
+//	create_heat_map(info, map);
+		i = 0;
+    	while (i < info->row)
+     	{
+        	 j = 0;
+         	while (j < info->col)
+         	{
+             	fprintf(stderr, "%d", info->heatmap[i][j]);
+				if (info->heatmap[i][j] < 10)
+         			fprintf(stderr, "    ");
+				else if (info->heatmap[i][j] < 100)
+         			fprintf(stderr, "   ");
+				else if (info->heatmap[i][j] < 1000)
+         			fprintf(stderr, "  ");
+				else if (info->heatmap[i][j] < 10000)
+         			fprintf(stderr, " ");
+             	j++;
+         	}
+         	fprintf(stderr, "\n");
+         	i++;
+     	}
+		piece_info(info, piece);
+		check_value(info, piece);
+		reset_heat(info);
+		//fprintf(stderr, "b_row = %d, b_col = %d\n", info->b_row, info->b_col);
+		print_piece(info);
+	}
+//	set_piece(info);
+//	solve(info, piece);
+//	ft_printf("%d %d\n", map_info.end_y, map_info.end_x);
+//	solve(info, coord, map);
+//	fprintf(stderr, "solve row =%d\n solve col =%d\n", info->e_row - piece->row, info->e_col - piece->col);
+//	ft_printf("%d %d\n", info->e_row - piece->row, info->e_col - piece->col);
 //	check_move(&info);
 /*	if (valid_map)
 	get_info;
