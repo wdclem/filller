@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/29 12:36:29 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/29 18:34:34 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,20 @@
 #include <stdio.h>
 #include "../includes/filler.h"
 
-/*int	valid_map(t_info *info)
+void	clean_exit(int **array, int len)
 {
-	//what makes a map viable i : column, row and two starting point//
-	if map have no column or grid
-		return error;
-	if map dont have starting point for p1 && p2
-		return error;
-	//CAN COMBINE TWO PREVIOUS STATEMENT
-	else
-		return ok;
+	int	i;
+
+	i = 0;
+	while(i < len)
+	{
+		free(info->map[i]);
+		i++;
+	}
+	free(info->map);
 }
 
-void	create_map(t_info *info)
-{
-	return ;
-}
-*/
 
-/*
-int	player_info(t_info *info)
-{
-	who is player 1;
-	who is player 2;
-}
-*/
 void		reset_heat(t_info *info)
 {
 	int		y;
@@ -53,30 +42,11 @@ void		reset_heat(t_info *info)
 			info->heatmap[y][x] = EMPTY;
 	}
 }
-/*
-int	print_piece(t_info *info)
-{
-	fprintf(stderr, "v  = %c\n", info->v);
-	if (info->v < 1000 || info->v>= 2000)
-	{
-		write(1, "0 0\n", 4);
-		exit(1);
-	}
-	ft_putnbr(info->b_row);
-	write(1, " ", 1);
-	ft_putnbr(info->b_col);
-	write(1, "\n", 1);
-	//free everything
-	return (1);
-}
-*/
+
 int	reset_struct(t_info *info, t_piece *piece)
 {
 	piece->shape = NULL;
-//	info->col = 0;
-//	info->row = 0;
 	info->elem = 0;
-	info->v = 20000;
 	info->p_col = 0;
 	info->p_row = 0;
 	info->s_row = 20000;
@@ -90,125 +60,42 @@ int	reset_struct(t_info *info, t_piece *piece)
 
 int	print_position(t_info *info)
 {
-//	fprintf(stderr, "v  = %d\n", info->min_sum);
-	if (info->min_sum < PLAYER || info->min_sum >= ENEMY)
+	if (info->sum < PLAYER || info->sum >= ENEMY)
 	{
 		ft_printf("0 0\n");
 		return (0);
 	}
 	else
-	{
-//		fprintf(stderr, "%d %d\n", info->b_row, info->b_col);
 		ft_printf("%d %d\n", info->b_row, info->b_col);
-	}
 	return(1);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	//int		check;
-	//int		valid;
-//	int		**map;
 	t_info	*info;
 	t_piece	*piece;
-//	int i;
-//	int j;
-//	t_piece	*coord;
-//	int		ret;
 
-//	line = NULL;
-//	if piece free piece
-	if (!argc || !argv)
-		ft_printf("oalala no argc");
+//	if (!argc || !argv)
+//		ft_printf("oalala no argc");
 	if (!(info = (t_info *)malloc(sizeof(t_info))))
 		return (-1);
-//	if (!(info = (t_info *)malloc(sizeof(t_info))))
-//		return (-1);
 	if (!(piece = (t_piece*)malloc(sizeof(t_piece))))
 		return (-1);
-//	stdo = NULL;
-//	get_next_line(0, &stdo);
-	//info.line = ft_strdup(*argv);
-	/*if (line == NULL)
-	{
-		ft_printf("en slip sur la banquise");
-		return (1);
-	}
-	*/
 	player_info(info);
-	fprintf(stderr, "enemy = %c\n", info->enemy);
-//	ft_strdel(&stdo);
 	get_map_dim(info);
 	while(1)
 	{
 		reset_struct(info, piece);
 		map_info(info);
-		/*
-		i = 0;
-    	while (i < info->row)
-     	{
-        	 j = 0;
-         	while (j < info->col)
-         	{
-             	fprintf(stderr, "%d", info->heatmap[i][j]);
-             	j++;
-         	}
-         	fprintf(stderr, "\n");
-         	i++;
-     	}
-		*/
 		create_heat_map(info);
-//	create_heat_map(info, map);
-/*		i = 0;
-    	while (i < info->row)
-     	{
-        	 j = 0;
-         	while (j < info->col)
-         	{
-             	fprintf(stderr, "%d", info->heatmap[i][j]);
-				if (info->heatmap[i][j] < 10)
-         			fprintf(stderr, "     ");
-				else if (info->heatmap[i][j] < 100)
-         			fprintf(stderr, "    ");
-				else if (info->heatmap[i][j] < 1000)
-         			fprintf(stderr, "   ");
-				else if (info->heatmap[i][j] < 10000)
-         			fprintf(stderr, "  ");
-				else if (info->heatmap[i][j] < 100000)
-         			fprintf(stderr, " ");
-             	j++;
-         	}
-         	fprintf(stderr, "\n");
-         	i++;
-     	}
-		*/
 		piece_info(info, piece);
 		set_position(info, piece);
-//		check_value(info, piece);
 		reset_heat(info);
-//		fprintf(stderr, "b_row = %d, b_col = %d\n", info->b_row, info->b_col);
-//		ft_printf("%d %d\n", info->b_row, info->b_col);
-		if(!( print_position(info)))
+		if(!(print_position(info)))
+		{
+			clean_exit(info->map, (
 				break;
-//		fprintf(stderr, "la veine");
-//		print_piece(info);
 	}
-//	set_piece(info);
-//	solve(info, piece);
-//	ft_printf("%d %d\n", map_info.end_y, map_info.end_x);
-//	solve(info, coord, map);
-//	fprintf(stderr, "solve row =%d\n solve col =%d\n", info->e_row - piece->row, info->e_col - piece->col);
-//	ft_printf("%d %d\n", info->e_row - piece->row, info->e_col - piece->col);
-//	check_move(&info);
-/*	if (valid_map)
-	get_info;
-		ok;
-	create_map;
-	//board generated by the vm
-	player_info;
-	piece_info;
-	*/
-//	fprintf(stderr, "le sangue");
 	return (0);
 }
 
