@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 15:18:40 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/09 11:52:10 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/27 18:23:09 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 
 void	ft_strdel(char **as)
 {
-	if (as && *as)
+	if (!as)
+		return ;
+	if (*as != NULL)
 	{
 		free(*as);
 		*as = NULL;

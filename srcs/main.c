@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/24 16:48:37 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/29 12:36:29 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,7 @@ int	player_info(t_info *info)
 	who is player 1;
 	who is player 2;
 }
-void		print_position(t_filler *filler)
-{
-	if (filler->val < PLAY || filler->val >= OPPO)
-	{
-		write(1, "0 0\n", 4);
-		exit(1);
-	}
-	ft_putnbr(filler->y);
-	write(1, " ", 1);
-	ft_putnbr(filler->x);
-	write(1, "\n", 1);
-	free_cell(filler->map, filler->mapheight);
-	free_cell(filler->cell, filler->cellheight);
-}*/
+*/
 void		reset_heat(t_info *info)
 {
 	int		y;
@@ -63,10 +50,10 @@ void		reset_heat(t_info *info)
 	{
 		x = -1;
 		while (++x < 20)
-			info->heatmap[y][x] = 100;
+			info->heatmap[y][x] = EMPTY;
 	}
 }
-
+/*
 int	print_piece(t_info *info)
 {
 	fprintf(stderr, "v  = %c\n", info->v);
@@ -82,23 +69,39 @@ int	print_piece(t_info *info)
 	//free everything
 	return (1);
 }
-
+*/
 int	reset_struct(t_info *info, t_piece *piece)
 {
 	piece->shape = NULL;
-	info->col = 0;
-	info->row = 0;
+//	info->col = 0;
+//	info->row = 0;
 	info->elem = 0;
-	info->v = 2000;
+	info->v = 20000;
 	info->p_col = 0;
 	info->p_row = 0;
-	info->s_row = 2000;
-	info->s_col = 2000;
+	info->s_row = 20000;
+	info->s_col = 20000;
 	info->b_row = 0;
 	info->b_col = 0;
 	info->map = NULL;
 	
 	return (1);
+}
+
+int	print_position(t_info *info)
+{
+//	fprintf(stderr, "v  = %d\n", info->min_sum);
+	if (info->min_sum < PLAYER || info->min_sum >= ENEMY)
+	{
+		ft_printf("0 0\n");
+		return (0);
+	}
+	else
+	{
+//		fprintf(stderr, "%d %d\n", info->b_row, info->b_col);
+		ft_printf("%d %d\n", info->b_row, info->b_col);
+	}
+	return(1);
 }
 
 int	main(int argc, char **argv)
@@ -108,11 +111,10 @@ int	main(int argc, char **argv)
 //	int		**map;
 	t_info	*info;
 	t_piece	*piece;
-	int i;
-	int j;
+//	int i;
+//	int j;
 //	t_piece	*coord;
 //	int		ret;
-//	char	*line;
 
 //	line = NULL;
 //	if piece free piece
@@ -124,17 +126,8 @@ int	main(int argc, char **argv)
 //		return (-1);
 	if (!(piece = (t_piece*)malloc(sizeof(t_piece))))
 		return (-1);
-	//if (!(piece = add_node()))
-	//	return (-1);
-	//if (!(coord = add_node()))
-	//	return (-1);
-	/* PROBABLY NOT NEEDED 
-	if (argc != 8)
-	{
-		return (1);
-		printf("usage : ./filler_vm -p1 player -p2 player -v -f map");
-	}
-	*/ 
+//	stdo = NULL;
+//	get_next_line(0, &stdo);
 	//info.line = ft_strdup(*argv);
 	/*if (line == NULL)
 	{
@@ -144,6 +137,8 @@ int	main(int argc, char **argv)
 	*/
 	player_info(info);
 	fprintf(stderr, "enemy = %c\n", info->enemy);
+//	ft_strdel(&stdo);
+	get_map_dim(info);
 	while(1)
 	{
 		reset_struct(info, piece);
@@ -164,7 +159,7 @@ int	main(int argc, char **argv)
 		*/
 		create_heat_map(info);
 //	create_heat_map(info, map);
-		i = 0;
+/*		i = 0;
     	while (i < info->row)
      	{
         	 j = 0;
@@ -172,23 +167,31 @@ int	main(int argc, char **argv)
          	{
              	fprintf(stderr, "%d", info->heatmap[i][j]);
 				if (info->heatmap[i][j] < 10)
-         			fprintf(stderr, "    ");
+         			fprintf(stderr, "     ");
 				else if (info->heatmap[i][j] < 100)
-         			fprintf(stderr, "   ");
+         			fprintf(stderr, "    ");
 				else if (info->heatmap[i][j] < 1000)
-         			fprintf(stderr, "  ");
+         			fprintf(stderr, "   ");
 				else if (info->heatmap[i][j] < 10000)
+         			fprintf(stderr, "  ");
+				else if (info->heatmap[i][j] < 100000)
          			fprintf(stderr, " ");
              	j++;
          	}
          	fprintf(stderr, "\n");
          	i++;
      	}
+		*/
 		piece_info(info, piece);
-		check_value(info, piece);
+		set_position(info, piece);
+//		check_value(info, piece);
 		reset_heat(info);
-		//fprintf(stderr, "b_row = %d, b_col = %d\n", info->b_row, info->b_col);
-		print_piece(info);
+//		fprintf(stderr, "b_row = %d, b_col = %d\n", info->b_row, info->b_col);
+//		ft_printf("%d %d\n", info->b_row, info->b_col);
+		if(!( print_position(info)))
+				break;
+//		fprintf(stderr, "la veine");
+//		print_piece(info);
 	}
 //	set_piece(info);
 //	solve(info, piece);
@@ -205,6 +208,7 @@ int	main(int argc, char **argv)
 	player_info;
 	piece_info;
 	*/
+//	fprintf(stderr, "le sangue");
 	return (0);
 }
 

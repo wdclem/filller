@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:07:26 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/24 16:50:36 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/29 11:40:43 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,15 @@ static void	init_heat_map(t_info *info)
 		j = 0;
 		while (j < info->col)
 		{
-			if (info->heatmap[i][j] == 2000)
+			if (info->heatmap[i][j] == ENEMY)
 			{
-				if (j + 1 < info->col && info->heatmap[i][j + 1] == 100)
+				if (j + 1 < info->col && info->heatmap[i][j + 1] == EMPTY)
 					info->heatmap[i][j + 1] = 0;
-				if (j > 0 && info->heatmap[i][j - 1] == 100)
+				if (j > 0 && info->heatmap[i][j - 1] == EMPTY)
 					info->heatmap[i][j - 1] = 0;
-				if (i + 1 < info->row && info->heatmap[i + 1][j] == 100)
+				if (i + 1 < info->row && info->heatmap[i + 1][j] == EMPTY)
 					info->heatmap[i + 1][j] = 0;
-				if (i > 0 && info->heatmap[i - 1][j] == 100)
+				if (i > 0 && info->heatmap[i - 1][j] == EMPTY)
 					info->heatmap[i - 1][j] = 0;
 			}
 			j++;
@@ -123,13 +123,13 @@ static int		set_cell_value(t_info *info, int val, int check)
 			if (info->heatmap[i][j] == val)
 			{
 				check = 1;
-				if (j + 1 < info->col && info->heatmap[i][j + 1] == 100)
+				if (j + 1 < info->col && info->heatmap[i][j + 1] == EMPTY)
 					info->heatmap[i][j + 1] = val + 1;
-				if (j > 0 && info->heatmap[i][j - 1] == 100)
+				if (j > 0 && info->heatmap[i][j - 1] == EMPTY)
 					info->heatmap[i][j - 1] = val + 1;
-				if (i + 1 < info->row && info->heatmap[i + 1][j] == 100)
+				if (i + 1 < info->row && info->heatmap[i + 1][j] == EMPTY)
 					info->heatmap[i + 1][j] = val + 1;
-				if (i > 0 && info->heatmap[i - 1][j] == 100)
+				if (i > 0 && info->heatmap[i - 1][j] == EMPTY)
 					info->heatmap[i - 1][j] = val + 1;
 			}
 			j++;

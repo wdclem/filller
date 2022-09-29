@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:48:15 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/24 16:49:01 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/29 12:31:19 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	player_info(t_info *info)
 {
-	char	*stdo;
 	int		player;
+	char	*stdo;
 
 	stdo = NULL;
 	get_next_line(0, &stdo);
+//	fprintf(stderr , "stdo = %s\n", stdo);
 	player = stdo[10] - '0';
-	fprintf(stderr , "player = %i\n", player);
+//	fprintf(stderr , "player = %i\n", player);
 	if (player == 1)
 	{
 		info->player = 'O';
@@ -31,31 +32,74 @@ int	player_info(t_info *info)
 		info->player = 'X';
 		info->enemy = 'O';
 	}	
-	fprintf(stderr , "enemy = %c\n", info->enemy);
-	free(stdo);
+//	fprintf(stderr , "enemy = %c\n", info->enemy);
+	ft_strdel(&stdo);
 	return (1); //tutto va bene need to make error checks ?
+}
+
+int	get_map_dim(t_info *info)
+{
+	char	*stdo;
+	int		i;
+
+	stdo = NULL;
+	i = 0;
+	get_next_line(0, &stdo);
+//	info->row  = ft_atoi(&stdo[8]);
+	while (!ft_isdigit(stdo[i]))
+		i++;
+	info->row  = ft_atoi(&stdo[i]);
+//	fprintf(stderr , "info->row= %d\n", info->row);
+	while (ft_isdigit(stdo[i]))
+		i++;
+	info->col = ft_atoi(&stdo[i]);//adjust stdo to numblen
+//	fprintf(stderr , "info->col= %d\n", info->col);
+	ft_strdel(&stdo);
+	return (0);
 }
 
 int	map_info(t_info *info)
 {
-	char	*stdo;
 //	int		i;
 	int		x;
 	int		y;
+	char	*stdo;
 //	int		j;
 
+
+	stdo = NULL;
+	get_next_line(0, &stdo);
+//	fprintf(stderr, "in map info= %s\n", stdo);
+//	get_map_dim(info, stdo);
+//	get_next_line(0, &stdo);
+	while (ft_strncmp(stdo, "000 ", 4) != 0)
+	{
+//		fprintf(stderr, "in while map info  = %s\n", stdo);
+		ft_strdel(&stdo);
+		if (get_next_line(0, &stdo) < 1)
+			return (0);
+	}
+/*
 	stdo = NULL;
 //	i = 0;
 	get_next_line(0, &stdo);
-	info->row  = ft_atoi(&stdo[8]);
-//	fprintf(stderr , "info->row= %d\n", info->row);
-	info->col = ft_atoi(&stdo[11]);//adjust stdo to numblen
-//	fprintf(stderr , "info->col= %d\n", info->col);
+//	info->row  = ft_atoi(&stdo[8]);
+	while (!ft_isdigit(*stdo))
+		stdo++;
+	info->row  = ft_atoi(stdo);
+	fprintf(stderr , "info->row= %d\n", info->row);
+	while (ft_isdigit(*stdo))
+		stdo++;
+	info->col = ft_atoi(stdo);//adjust stdo to numblen
+	fprintf(stderr , "info->col= %d\n", info->col);
 	get_next_line(0, &stdo);
 	ft_strdel(&stdo);
 	get_next_line(0, &stdo);
+	*/
 //	fprintf(stderr , "stdo = %s\n", stdo);
-	info->map = (char **)malloc(sizeof(char *) * info->row);
+//	fprintf(stderr , "stdo = %s\n", stdo);
+	if (!(info->map = (char **)malloc(sizeof(char *) * info->row)))
+		exit(1);
 	if (info->map == NULL)
 		fprintf(stderr , "bite en bois\n");
 //	fprintf(stderr , "stdo = %s\n", stdo);
@@ -65,7 +109,8 @@ int	map_info(t_info *info)
 	{
 		x = 0;
 		//fprintf(stderr , "stdo = %s\n", stdo);
-		info->map[y]= ft_strdup(stdo + 4);
+		if ((info->map[y]= ft_strdup(stdo + 4)) == NULL)
+			exit (1);
 //		fprintf(stderr , "infiltre 1\n");
 		while (x < info->col)
 		{
@@ -76,13 +121,13 @@ int	map_info(t_info *info)
 			if (info->map[y][x] == info->enemy) 
 			{
 //				fprintf(stderr, "hello\n");
-				info->heatmap[y][x] = 2000;
+				info->heatmap[y][x] = ENEMY;
 			}
 			else if (info->map[y][x] == info->player) 
-				info->heatmap[y][x] = 1000;
+				info->heatmap[y][x] = PLAYER;
 			else
 			{
-				info->heatmap[y][x] = 100;
+				info->heatmap[y][x] = EMPTY;
 //				fprintf(stderr, "culotte\n");
 			}
 //			fprintf(stderr , "map = %c\n", info->map[y][x]);
@@ -91,7 +136,7 @@ int	map_info(t_info *info)
 	//		fprintf(stderr , "y = %d\n", y);
 			x++;
 		}
-		ft_strdel(&stdo);
+//		ft_strdel(&stdo);
 //		free(line);
 		if ((y + 1) < info->row)
 			get_next_line(0, &stdo);
@@ -143,6 +188,7 @@ int	map_info(t_info *info)
 		i++;
 	}
 	*/
+	ft_strdel(&stdo);
 	return (1);
 }
 //	hedddat_map_init(info, map);

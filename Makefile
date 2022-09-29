@@ -6,7 +6,7 @@
 #    By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 10:28:45 by ccariou           #+#    #+#              #
-#    Updated: 2022/09/24 12:47:12 by ccariou          ###   ########.fr        #
+#    Updated: 2022/09/26 22:16:09 by ccariou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LFT = -L ./libft/ -lft
 
 # SOURCES FILES 
 SRC_DIR = ./srcs/
-SRCS = main.c get_info.c get_piece.c create_heat_map.c set_piece.c\
+SRCS = main.c get_info.c get_piece.c create_heat_map.c piece_position.c\
 
 INC = -I ./includes
 INC_LFT = -I ./libft/includes 
