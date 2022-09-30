@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:48:15 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/29 18:57:22 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 13:49:47 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	player_info(t_info *info)
 
 	stdo = NULL;
 	if (get_next_line(0, &stdo) < 1)
-		return(0);
+		return(-2);
 	player = stdo[10] - '0';
 	if (player == 1)
 	{
@@ -43,7 +43,7 @@ int	get_map_dim(t_info *info)
 	stdo = NULL;
 	i = 0;
 	if (get_next_line(0, &stdo) < 1)
-		return(0);
+		return(-2);
 	while (!ft_isdigit(stdo[i]))
 		i++;
 	info->row  = ft_atoi(&stdo[i]);
@@ -54,15 +54,17 @@ int	get_map_dim(t_info *info)
 	return (1);
 }
 
-static void	get_map(t_info *info, char *stdo, int i, int j)
+static int	get_map(t_info *info, char *stdo, int i, int j)
 {
 	while (++i < info->row)
 	{
 		j = -1;
-		if (!(info->map[i]= ft_strdup(stdo + 4)))
+		info->map[i]= ft_strdup(stdo + 4);
+		info->heatmap[i] = (int *)malloc(sizeof(int) * info->col);
+		if (!(info->map[i] || info->heatmap[i]))
 		{
-			clean_exit(info->map, info->row);
-			return (0);
+			ft_strdel(&stdo);
+			return (-1);
 		}
 		while (++j < info->col)
 		{
@@ -76,11 +78,12 @@ static void	get_map(t_info *info, char *stdo, int i, int j)
 		if ((i + 1) < info->row)
 			if (get_next_line(0, &stdo) < 1)
 			{
-				clean_exit(info->map, info->row);
-				return (0);
+				ft_strdel(&stdo);
+				return (-2);
 			}
 	}
 	ft_strdel(&stdo);
+	return (0);
 }
 
 int	map_info(t_info *info)
@@ -91,22 +94,28 @@ int	map_info(t_info *info)
 
 	stdo = NULL;
 	if (get_next_line(0, &stdo) < 1)
-		return (0);
+		return (-2);
 	while (ft_strncmp(stdo, "000 ", 4) != 0)
 	{
 		ft_strdel(&stdo);
 		if (get_next_line(0, &stdo) < 1)
-			return (0);
+			return (-2);
 	}
-	if (!(info->map = (char **)malloc(sizeof(char *) * info->row)))
-		return (0);
+	info->heatmap = (int **)malloc(sizeof(int *) * info->row);
+	info->map = (char **)malloc(sizeof(char *) * info->row);
+	if (!(info->map || info->heatmap))
+	{
+		ft_strdel(&stdo);
+		return (-1);
+	}
 	i = -1;
 	j = -1;
-	get_map(info, stdo, i, j);
-	/*
+	if (!(get_map(info, stdo, i, j)))
+		return (-1);
+/*	int y = 0;
 	while (y < info->row)
 	{
-		x = 0;
+		int x = 0;
 		if ((info->map[y]= ft_strdup(stdo + 4)) == NULL)
 			exit (1);
 		while (x < info->col)
@@ -128,6 +137,6 @@ int	map_info(t_info *info)
 		y++;
 	}
 	ft_strdel(&stdo);
-	*/
+*/
 	return (1);
 }

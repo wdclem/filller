@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:51:51 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/29 17:46:33 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 13:34:08 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	try_positions(t_info *info, t_piece *piece, int row, int col)
 	ret = 0;
 	y = row;
 	i = -1;
-	while (++i < info->p_row)
+	while (++i < piece->row)
 	{
 		x = col;
 		j = -1;
-		while (++j < info->p_col)
+		while (++j < piece->col)
 		{
 			if (piece->shape[i][j] == '*')
 				ret += (info->heatmap[y][x]);
@@ -55,15 +55,18 @@ int	set_position(t_info *info, t_piece *piece)
 	int		ret;
 	int		col;
 	int		row;
+	int		map_col;
+	int		map_row;
 
 	info->sum = ENEMY;
+	info->b_col = info->col;
 	row = -1;
-	info->row -= info->p_row;
-	info->col -= info->p_col;
-	while (++row <= info->row)
+	map_row = info->row - piece->row;
+	map_col = info->col - piece->col;
+	while (++row <= map_row)
 	{
 		col = -1;
-		while (++col <= info->col)
+		while (++col <= map_col)
 		{
 			ret = try_positions(info, piece, row, col);
 			if (ret < info->sum || (ret == info->sum && col < info->b_col))
@@ -74,5 +77,6 @@ int	set_position(t_info *info, t_piece *piece)
 			}
 		}
 	}
+	fprintf(stderr, "ret = %d\n", ret);
 	return (1);
 }

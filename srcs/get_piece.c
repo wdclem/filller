@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:07:05 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/29 16:37:11 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 13:17:29 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
  * Check the information of the piece receive by the VM, s_col and s_row retain the starting point of the piece
  * (if piece start on second row, second col ect ect ...)
  */
-void	shape_info(t_info *info, t_piece *piece, char *stdo, int i)
+int	shape_info(t_info *info, t_piece *piece, char *stdo, int i)
 {
 	int	j;
 
-	while (++i < info->p_row)
+	while (++i < piece->row)
 	{
-		get_next_line(0, &stdo);
+		if (get_next_line(0, &stdo) < 1)
+			return (-2);
 		piece->shape[i] = ft_strdup(stdo);
+		if (!piece->shape[i])
+			return(-1);
 		j = -1;
-		while (++j < info->p_col)
+		while (++j < piece->col)
 		{
 			if (piece->shape[i][j] == '*')
 			{
@@ -38,6 +41,7 @@ void	shape_info(t_info *info, t_piece *piece, char *stdo, int i)
 		}
 		ft_strdel(&stdo);
 	}
+	return (0);
 }
 
 int	piece_info(t_info *info, t_piece *piece)
@@ -47,7 +51,6 @@ int	piece_info(t_info *info, t_piece *piece)
 
 	i = 0;
 	piece->shape = NULL;
-	info->elem = 0;
 	stdo = NULL;
 	get_next_line(0, &stdo);
 	while (ft_strncmp(stdo, "Piece", 5) != 0)
@@ -58,13 +61,15 @@ int	piece_info(t_info *info, t_piece *piece)
 	}
 	while (!ft_isdigit(stdo[i]))
 		i++;
-	info->p_row = ft_atoi(&stdo[i]);
+	piece->row = ft_atoi(&stdo[i]);
 	while (ft_isdigit(stdo[i]))
 		i++;
-	info->p_col = ft_atoi(&stdo[i]);
-	piece->shape = (char **)malloc(sizeof(char *) * info->p_row);
+	piece->col = ft_atoi(&stdo[i]);
+	piece->shape = (char **)malloc(sizeof(char *) * piece->row);
+	if (!piece->shape)
+		return(0);
 	i = -1;
 	shape_info(info, piece, stdo, i);
-	fprintf(stderr, "piece = %s\n", piece->shape[0]);
+//	fprintf(stderr, "piece = %s\n", piece->shape[0]);
 	return (1);
 }

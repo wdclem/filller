@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:51:35 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/29 18:24:21 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 14:15:14 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "../libft/includes/libft.h"
-# define ENEMY 90000
+# define ENEMY 20000
 # define PLAYER 10000
 # define EMPTY 100 
 
@@ -38,7 +38,7 @@ typedef struct	s_info{
 				int		sum;
 				char	**map;
 				char	**piece;
-				int		heatmap[100][100];
+				int		**heatmap;
 }				t_info;
 
 typedef struct	s_piece
@@ -48,12 +48,12 @@ typedef struct	s_piece
 				char **shape;
 }				t_piece;
 
-int	main(int argc, char **argv);
+int	main(void);
 int	player_info(t_info *info);
 int	get_map_dim(t_info *info);
 int	map_info(t_info *info);
 int	piece_info(t_info *info, t_piece *piece);
-void    create_heat_map(t_info *info);
+int	create_heat_map(t_info *info);
 int	set_position(t_info *info, t_piece *piece);
 
 #endif
