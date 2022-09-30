@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:15:04 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 12:59:29 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 18:08:13 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*ft_itoa(int n);
 */
 
 int		ft_isspace(char c);
-void	ft_freearray(void **array, int i);
+void	ft_freearray(void **array, int n);
 char	**ft_maketab(int len);
 char	*ft_makearray(int len);
 int		get_next_line(const int fd, char **line);

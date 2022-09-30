@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:48:15 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 13:49:47 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 16:28:40 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	get_map(t_info *info, char *stdo, int i, int j)
 			}
 	}
 	ft_strdel(&stdo);
-	return (0);
+	return (1);
 }
 
 int	map_info(t_info *info)

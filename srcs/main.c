@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 14:40:31 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 18:31:29 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ int	clean_exit(t_info *info, t_piece *piece)
 {
 	if (info)
 	{
-		if(info->map)
+		if(info->map != NULL)
 			ft_freearray((void **)info->map, info->row);
-		if(info->heatmap)
+		if(info->heatmap != NULL)
 			ft_freearray((void **)info->heatmap, info->row);
-		free(info);
-		info = NULL;
+		//free(info);
+		//info = NULL;
 	}
 	if (piece)
 	{
-		if (piece->shape)
+		if (piece->shape != NULL)
 			ft_freearray((void **)piece->shape, piece->row);
-		free(piece);
-		piece = NULL;
+		//free(piece);
+		//piece = NULL;
 	}
 	return (0);
 }
@@ -66,15 +66,26 @@ int	set_struct(t_info *info, t_piece *piece)
 	return (1);
 }
 
-int	print_position(t_info *info)
+int	print_position(t_info *info, t_piece *piece)
 {
 	if (info->sum < PLAYER || info->sum >= ENEMY)
 	{
-		ft_printf("0 0\n");
-		return (-3);
+		write(1, "0 0\n", 4);
+		return (0);
 	}
 	else
+	{
 		ft_printf("%d %d\n", info->b_row, info->b_col);
+		if (info->map)
+			ft_freearray((void **)info->map, info->row);
+//		info->map = NULL;
+		if (info->heatmap)
+			ft_freearray((void **)info->heatmap, info->row);
+//		info->heatmap = NULL;
+		if (piece->shape)
+			ft_freearray((void **)piece->shape, piece->col);
+//		piece->shape = NULL;
+	}
 	return (1);
 }
 
@@ -90,28 +101,31 @@ void	play_the_game(t_info *info, t_piece *piece)
 		if (!(piece_info(info, piece)))
 			break ;
 		set_position(info, piece);
-		if(!(print_position(info)))
+		if(!(print_position(info, piece)))
 			break;
 	}
-	fprintf(stderr,"maite la culotte");
 	clean_exit(info, piece);
 }
 
 int	main(void)
 {
-	t_info	*info;
-	t_piece	*piece;
+	t_info	info;
+	t_piece	piece;
 
-	piece = NULL;
+	ft_bzero(&info, sizeof(t_info));
+	ft_bzero(&piece, sizeof(t_piece));
+	/*
 	info = (t_info *)malloc(sizeof(t_info));
 	if (!info)
 		return (clean_exit(info, piece), -1);
 	piece = (t_piece*)malloc(sizeof(t_piece));
 	if (!piece)
 		return (clean_exit(info, piece), -1);
-	player_info(info);
-	get_map_dim(info);
-	play_the_game(info, piece);
+		*/
+	player_info(&info);
+	get_map_dim(&info);
+	play_the_game(&info, &piece);
+	system ("leaks ccariou.filler >> filler.note");
 	return (0);
 }
 

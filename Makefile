@@ -6,14 +6,14 @@
 #    By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 10:28:45 by ccariou           #+#    #+#              #
-#    Updated: 2022/09/30 14:39:43 by ccariou          ###   ########.fr        #
+#    Updated: 2022/09/30 18:11:20 by ccariou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ccariou.filler 
 HEAD = filler.h
 # compile specs
-FLAGS = -g -Werror -Wextra -Wall -fsanitize=address
+FLAGS = -Werror -Wextra -Wall -g 
 CC = gcc
 LFT = -L ./libft/ -lft
 

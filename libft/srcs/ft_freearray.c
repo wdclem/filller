@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 09:38:19 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 12:58:26 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 18:10:33 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,16 @@
 /* Function to free array/2d array
  */
 
-void	ft_freearray(void **array, int i)
+void	ft_freearray(void **array, int n)
 {
-	while (i--)
+	int i;
+
+	i = 0;
+	while (i < n)
+	{
 		free(array[i]);
+		i++;
+	}
 	free(array);
+	array = NULL;
 }

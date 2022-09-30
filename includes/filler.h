@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:51:35 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 14:15:14 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 17:35:15 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,12 @@ typedef struct	s_info{
 				int		col;
 				int		row;
 				int		elem;
-				int		p_col;
-				int		p_row;
 				int		s_row;
 				int		s_col;
 				int		b_row;
 				int		b_col;
 				int		sum;
 				char	**map;
-				char	**piece;
 				int		**heatmap;
 }				t_info;
 

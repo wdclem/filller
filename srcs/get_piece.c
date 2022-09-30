@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:07:05 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 13:17:29 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/09/30 16:46:13 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	shape_info(t_info *info, t_piece *piece, char *stdo, int i)
 			return (-2);
 		piece->shape[i] = ft_strdup(stdo);
 		if (!piece->shape[i])
-			return(-1);
+			return (-1);
 		j = -1;
 		while (++j < piece->col)
 		{
@@ -67,9 +67,9 @@ int	piece_info(t_info *info, t_piece *piece)
 	piece->col = ft_atoi(&stdo[i]);
 	piece->shape = (char **)malloc(sizeof(char *) * piece->row);
 	if (!piece->shape)
-		return(0);
+		return (-1);
 	i = -1;
+	ft_strdel(&stdo);
 	shape_info(info, piece, stdo, i);
-//	fprintf(stderr, "piece = %s\n", piece->shape[0]);
 	return (1);
 }
