@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:07:26 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 14:33:06 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:42:15 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,6 @@ int	create_heat_map(t_info *info)
 	j = -1;
 	init_heat_map(info);
 	val = 0;
-/*	while (++i < info->row)
-	{
-		while (++j < info->col)
-			if(set_cell_value(info, val, i, j))
-				val++;
-	}
-	return (1);
-	*/
 	while ((set_cell_value(info, val, i, j)) == 1)
 		val ++;
 	return (1);

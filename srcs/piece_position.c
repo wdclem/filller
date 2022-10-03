@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:51:51 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 13:34:08 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:41:33 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	try_positions(t_info *info, t_piece *piece, int row, int col)
 	int	ret;
 	int	i;
 	int	j;
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	ret = 0;
 	y = row;
@@ -37,9 +37,9 @@ int	try_positions(t_info *info, t_piece *piece, int row, int col)
 		y++;
 	}
 	if (ret < PLAYER)
-		return(ret = ENEMY);
+		return (ret = ENEMY);
 	else
-		return(ret);
+		return (ret);
 }
 
 /*
@@ -58,7 +58,6 @@ int	set_position(t_info *info, t_piece *piece)
 	int		map_col;
 	int		map_row;
 
-	info->sum = ENEMY;
 	info->b_col = info->col;
 	row = -1;
 	map_row = info->row - piece->row;
@@ -77,6 +76,5 @@ int	set_position(t_info *info, t_piece *piece)
 			}
 		}
 	}
-	fprintf(stderr, "ret = %d\n", ret);
 	return (1);
 }

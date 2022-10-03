@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:51:35 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 17:35:15 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/03 12:54:09 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,28 @@
 # define EMPTY 100 
 
 /* Struct to keep miscelanous infos */
-typedef struct	s_info{
-				char	player;
-				char	enemy;
-				int		col;
-				int		row;
-				int		elem;
-				int		s_row;
-				int		s_col;
-				int		b_row;
-				int		b_col;
-				int		sum;
-				char	**map;
-				int		**heatmap;
+typedef struct s_info{
+	char	player;
+	char	enemy;
+	int		col;
+	int		row;
+	int		elem;
+	int		s_row;
+	int		s_col;
+	int		b_row;
+	int		b_col;
+	int		sum;
+	int		check;
+	char	**map;
+	int		**heatmap;
 }				t_info;
 
-typedef struct	s_piece
+typedef struct s_piece
 {
-				int	row;
-				int	col;
-				char **shape;
-}				t_piece;
+	int		row;
+	int		col;
+	char	**shape;
+}			t_piece;
 
 int	main(void);
 int	player_info(t_info *info);

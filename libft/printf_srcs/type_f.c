@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 14:53:11 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/09 11:56:16 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:26:12 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static long double	round(long double num, int precision)
 	while (i-- > 0)
 		extra /= 10;
 	if (num == 0.5 && (num - num == 0.0) && helper % 2 == 0)
-			extra = 0.0;
+		extra = 0.0;
 	return (extra);
 }
 

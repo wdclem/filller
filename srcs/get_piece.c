@@ -6,42 +6,49 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:07:05 by ccariou           #+#    #+#             */
-/*   Updated: 2022/09/30 16:46:13 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/03 12:36:40 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/filler.h"
-#include <stdio.h>
+
 /*
- * Check the information of the piece receive by the VM, s_col and s_row retain the starting point of the piece
+ * Check the information of the piece receive by the VM
+ * s_col and s_row retain the starting point of the piece
  * (if piece start on second row, second col ect ect ...)
  */
-int	shape_info(t_info *info, t_piece *piece, char *stdo, int i)
-{
-	int	j;
 
+static void	start_point(t_info *info, t_piece *piece, int i, int j)
+{
+	if (piece->shape[i][j] == '*')
+	{
+		if (j < info->s_col)
+			info->s_col = j;
+		if (i < info->s_row)
+			info->s_row = i;
+		info->elem++;
+	}
+}
+
+int	shape_info(t_info *info, t_piece *piece, int i)
+{
+	int		j;
+	char	*stdo;
+
+	stdo = NULL;
 	while (++i < piece->row)
 	{
 		if (get_next_line(0, &stdo) < 1)
 			return (-2);
 		piece->shape[i] = ft_strdup(stdo);
+		ft_strdel(&stdo);
 		if (!piece->shape[i])
 			return (-1);
 		j = -1;
 		while (++j < piece->col)
-		{
-			if (piece->shape[i][j] == '*')
-			{
-				if (j < info->s_col)
-					info->s_col = j;
-				if (i < info->s_row)
-					info->s_row = i;
-				info->elem++;
-			}
-		}
-		ft_strdel(&stdo);
+			start_point(info, piece, i, j);
 	}
-	return (0);
+	return (1);
 }
 
 int	piece_info(t_info *info, t_piece *piece)
@@ -50,14 +57,14 @@ int	piece_info(t_info *info, t_piece *piece)
 	char	*stdo;
 
 	i = 0;
-	piece->shape = NULL;
 	stdo = NULL;
-	get_next_line(0, &stdo);
+	if (get_next_line(0, &stdo) < 1)
+		return (-2);
 	while (ft_strncmp(stdo, "Piece", 5) != 0)
 	{
 		ft_strdel(&stdo);
 		if (get_next_line(0, &stdo) < 1)
-			return (-1);
+			return (-2);
 	}
 	while (!ft_isdigit(stdo[i]))
 		i++;
@@ -65,11 +72,10 @@ int	piece_info(t_info *info, t_piece *piece)
 	while (ft_isdigit(stdo[i]))
 		i++;
 	piece->col = ft_atoi(&stdo[i]);
+	ft_strdel(&stdo);
 	piece->shape = (char **)malloc(sizeof(char *) * piece->row);
 	if (!piece->shape)
 		return (-1);
 	i = -1;
-	ft_strdel(&stdo);
-	shape_info(info, piece, stdo, i);
-	return (1);
+	return (shape_info(info, piece, i));
 }
