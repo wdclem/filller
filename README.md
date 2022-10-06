@@ -10,15 +10,17 @@ Used a pretty simple method to check the board, and two while statement to loop 
 In the case where no custom board is made, could consider remove memory allocation.
 I decided to go for it as a way to practice, in my opinion program would be better without.
 
-HOW TO:
-
+##HOW TO:
+```
 make
-
+```
 To launch the game (against player hcao on map00)
+```
 ./resources/filler_vm -p1 ./ccariou.filler -p2 ./resources/players/hcao.filler -v -f ./resources/maps/map00
-
+```
 
 Script available to simulate multiple game (result in SCORE)
 To play 5 games on all map against all opponents :
+```
 ./game.sh all 5
-
+```
