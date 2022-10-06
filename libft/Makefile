@@ -34,7 +34,7 @@ SRC = ft_putchar.c ft_putchar_fd.c ft_putstr_fd.c ft_putstr.c ft_strlen.c \
 	  ft_strtrim.c ft_itoa.c \
 	  ft_lstadd.c ft_lstdelone.c ft_lstdel.c ft_lstiter.c ft_lstnew.c ft_lstmap.c\
 	  ft_freearray.c ft_maketab.c ft_makearray.c \
-	  get_next_line.c \
+	  get_next_line.c 
 
 #FT_PRINTF SOURCES
 PF_DIR = ./printf_srcs/
@@ -50,25 +50,25 @@ PF_OBJ = $(addprefix $(OBJ_DIR), $(PF_SRC:.c=.o))
 all: $(NAME) 
 
 $(NAME): $(LFT_OBJ) $(PF_OBJ)
-	@ar rcs $(NAME) $(LFT_OBJ) $(PF_OBJ)
-	echo "lib created"
-	@ranlib $(NAME)
+	-@ar rcs $(NAME) $(LFT_OBJ) $(PF_OBJ)
+	-@echo "lib created"
+	-@ranlib $(NAME)
 
 $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
-	 mkdir -p $(OBJ_DIR)
-	 $(CC) $(FLAGS) $(INC) -o $@ -c $<
+	-@mkdir -p $(OBJ_DIR)
+	-@$(CC) $(FLAGS) $(INC) -o $@ -c $<
 
 $(OBJ_DIR)%.o:	$(PF_DIR)%.c
-	 mkdir -p $(OBJ_DIR)
-	 $(CC) $(FLAGS) $(INC) -o $@ -c $<
+	-@mkdir -p $(OBJ_DIR)
+	-@$(CC) $(FLAGS) $(INC) -o $@ -c $<
 
 clean:
-	@ rm -rf $(OBJ_DIR)
-	@ echo "object deleted" 
+	-@rm -rf $(OBJ_DIR)
+	-@echo "lib object deleted" 
 
 fclean: clean
-	@ rm -f $(NAME)
-	@ echo "fclean completed" 
+	-@rm -f $(NAME)
+	-@echo "lib fclean completed" 
 
 re: fclean all
 

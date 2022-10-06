@@ -6,11 +6,15 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:28:01 by ccariou           #+#    #+#             */
-/*   Updated: 2022/10/03 11:49:03 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/06 11:17:52 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/filler.h"
+#include "filler.h"
+
+/*
+ * Clean the previously allocated element if they exist
+ */
 
 int	clean_exit(t_info *info, t_piece *piece)
 {
@@ -37,10 +41,10 @@ int	set_struct(t_info *info, t_piece *piece)
 	piece->shape = NULL;
 	piece->row = 0;
 	piece->col = 0;
-	info->sum = ENEMY;
+	info->sum = OPP;
 	info->elem = 0;
-	info->s_row = 90000;
-	info->s_col = 90000;
+	info->s_row = 0;
+	info->s_col = 0;
 	info->b_row = 0;
 	info->b_col = 0;
 	info->check = 0;
@@ -51,9 +55,9 @@ int	set_struct(t_info *info, t_piece *piece)
 
 int	print_position(t_info *info, t_piece *piece)
 {
-	if (info->sum < PLAYER || info->sum >= ENEMY)
+	if (info->sum < PLAYER || info->sum >= OPP)
 	{
-		write(1, "0 0\n", 4);
+		ft_printf("0 0\n");
 		return (0);
 	}
 	else
@@ -65,23 +69,33 @@ int	print_position(t_info *info, t_piece *piece)
 	return (1);
 }
 
+/*
+ * Loop as long as the game goes, set the info that need to get reset.
+ * if return !=1 (== error) break the loop and clean exit
+ */
+
 void	play_the_game(t_info *info, t_piece *piece)
 {
 	while (1)
 	{
 		set_struct(info, piece);
-		if (!(map_info(info)))
+		if (!((map_info(info)) == 1))
 			break ;
-		if (!(create_heat_map(info)))
+		if (!((create_heat_map(info)) == 1))
 			break ;
-		if (!(piece_info(info, piece)))
+		if (!((piece_info(info, piece)) == 1))
 			break ;
 		set_position(info, piece);
-		if (!(print_position(info, piece)))
+		if (!((print_position(info, piece)) == 1))
 			break ;
 	}
 	clean_exit(info, piece);
 }
+
+/* 
+ * Initialize the two struct and get the info that would be static for every game.
+ * then play the game by launching the while loop
+ */
 
 int	main(void)
 {
@@ -90,9 +104,10 @@ int	main(void)
 
 	ft_bzero(&info, sizeof(t_info));
 	ft_bzero(&piece, sizeof(t_piece));
-	player_info(&info);
-	get_map_dim(&info);
+	if (!((player_info(&info)) == 1))
+		return (ERROR);
+	if (!((get_map_dim(&info)) == 1))
+		return (ERROR);
 	play_the_game(&info, &piece);
-	system ("leaks ccariou.filler >> filler.note");
 	return (0);
 }

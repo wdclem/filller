@@ -6,12 +6,16 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:51:51 by ccariou           #+#    #+#             */
-/*   Updated: 2022/10/03 11:41:33 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/06 11:04:20 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/filler.h"
-#include <stdio.h>
+
+/* Take the piece and try every elem of it on the board
+ * trying to find the smallest value
+ * repeat for all position of the board
+ */
 
 int	try_positions(t_info *info, t_piece *piece, int row, int col)
 {
@@ -37,20 +41,12 @@ int	try_positions(t_info *info, t_piece *piece, int row, int col)
 		y++;
 	}
 	if (ret < PLAYER)
-		return (ret = ENEMY);
+		return (ret = OPP);
 	else
 		return (ret);
 }
 
-/*
-static void	save_best_position(t_info *info, int b_row, int b_col)
-{
-	info->b_row = b_row;
-	info->b_col = b_col;
-	return (info);
-}
-*/
-int	set_position(t_info *info, t_piece *piece)
+void	set_position(t_info *info, t_piece *piece)
 {
 	int		ret;
 	int		col;
@@ -76,5 +72,4 @@ int	set_position(t_info *info, t_piece *piece)
 			}
 		}
 	}
-	return (1);
 }

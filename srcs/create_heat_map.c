@@ -6,11 +6,17 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 10:07:26 by ccariou           #+#    #+#             */
-/*   Updated: 2022/10/03 11:42:15 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/06 11:03:57 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/filler.h"
+#include "filler.h"
+
+/*
+ * Set value of the board according the cell value around
+ * Setting lowest value closest to the opponent
+ * use it as a starting point to set other value
+ */
 
 static void	init_heat_map(t_info *info)
 {
@@ -23,7 +29,7 @@ static void	init_heat_map(t_info *info)
 		j = -1;
 		while (++j < info->col)
 		{
-			if (info->heatmap[i][j] == ENEMY)
+			if (info->heatmap[i][j] == OPP)
 			{
 				if (j + 1 < info->col && info->heatmap[i][j + 1] == EMPTY)
 					info->heatmap[i][j + 1] = 0;
@@ -37,10 +43,6 @@ static void	init_heat_map(t_info *info)
 		}
 	}
 }
-
-/*
- * Set value of empty cell on the board according the next/previous cell value
- */
 
 static int	set_cell_value(t_info *info, int val, int i, int j)
 {

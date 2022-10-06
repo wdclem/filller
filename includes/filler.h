@@ -6,26 +6,25 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 09:51:35 by ccariou           #+#    #+#             */
-/*   Updated: 2022/10/03 12:54:09 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/06 10:22:40 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-# include <stdarg.h>
-# include <stdio.h> /* DELETE DELETE DELETE IDIOT */
-# include <stdlib.h>
-# include <unistd.h>
-# include "../libft/includes/libft.h"
-# define ENEMY 20000
+# include "libft.h"
+# define OPP 20000
 # define PLAYER 10000
 # define EMPTY 100 
+# define MALLOC_ERR -1 
+# define GNL_ERR -2
+# define ERROR -3
 
 /* Struct to keep miscelanous infos */
 typedef struct s_info{
 	char	player;
-	char	enemy;
+	char	opp;
 	int		col;
 	int		row;
 	int		elem;
@@ -39,6 +38,7 @@ typedef struct s_info{
 	int		**heatmap;
 }				t_info;
 
+/* Struct to keep piece*/
 typedef struct s_piece
 {
 	int		row;
@@ -46,12 +46,12 @@ typedef struct s_piece
 	char	**shape;
 }			t_piece;
 
-int	main(void);
-int	player_info(t_info *info);
-int	get_map_dim(t_info *info);
-int	map_info(t_info *info);
-int	piece_info(t_info *info, t_piece *piece);
-int	create_heat_map(t_info *info);
-int	set_position(t_info *info, t_piece *piece);
+int		main(void);
+int		player_info(t_info *info);
+int		get_map_dim(t_info *info);
+int		map_info(t_info *info);
+int		piece_info(t_info *info, t_piece *piece);
+int		create_heat_map(t_info *info);
+void	set_position(t_info *info, t_piece *piece);
 
 #endif

@@ -20,7 +20,7 @@ do
     if [ ! -e "$PWD/SCORE/$PLAYER/$STRMAP.trace" ]; then
         touch $PWD/SCORE/$PLAYER/$STRMAP.trace
     fi
-    echo -e "ON $STRMAP FOR $GAME GAME:" >> $PWD/SCORE/$PLAYER/$STRMAP.trace 
+    echo -e "ON $STRMAP FOR $GAME GAME:" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
     if [ ! -e "$PWD/SCORE/$PLAYER/$STRMAP.result" ]; then
         touch $PWD/SCORE/$PLAYER/$STRMAP.result
     fi
@@ -61,14 +61,14 @@ do
     done
     let percent=$(((100*$MYWIN)/$GAME))
     echo -e "---------------------------------------------------" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
-    echo -e "PLAYER              |    %v   |    victory - game |" >> $PWD/SCORE/$PLAYER/$STRMAP.trace  
+    echo -e "PLAYER              |    %v   |    victory - game |" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
     echo -e "--------------------------------------------------" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
     echo -e "$ME     |    "$percent%"    |       $MYWIN - $GAME   |" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
-    echo -e "--------------------------------------------------" >> $PWD/SCORE/$PLAYER/$STRMAP.trace 
-    let percent=$(((100*$ENEMYWIN)/$GAME)) >> $PWD/SCORE/$PLAYER/$STRMAP.trace 
-    echo -e "$PLAYER               |   $percent%  |           $ENEMYWIN - $GAME   |" >> $PWD/SCORE/$PLAYER/$STRMAP.trace 
-    echo -e "--------------------------------------------------" >> $PWD/SCORE/$PLAYER/$STRMAP.trace 
-    echo -e "\n" >> $PWD/SCORE/$PLAYER/$STRMAP.trace 
+    echo -e "--------------------------------------------------" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
+    let percent=$(((100*$ENEMYWIN)/$GAME)) >> $PWD/SCORE/$PLAYER/$STRMAP.trace
+    echo -e "$PLAYER               |   $percent%  |           $ENEMYWIN - $GAME   |" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
+    echo -e "--------------------------------------------------" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
+    echo -e "\n" >> $PWD/SCORE/$PLAYER/$STRMAP.trace
     ENEMYWIN=0
     MYWIN=0
 done

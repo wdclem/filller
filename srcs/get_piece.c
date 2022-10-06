@@ -6,11 +6,11 @@
 /*   By: ccariou <ccariou@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 15:07:05 by ccariou           #+#    #+#             */
-/*   Updated: 2022/10/03 12:36:40 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/06 10:12:53 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/filler.h"
+#include "filler.h"
 
 /*
  * Check the information of the piece receive by the VM
@@ -39,11 +39,11 @@ int	shape_info(t_info *info, t_piece *piece, int i)
 	while (++i < piece->row)
 	{
 		if (get_next_line(0, &stdo) < 1)
-			return (-2);
+			return (GNL_ERR);
 		piece->shape[i] = ft_strdup(stdo);
 		ft_strdel(&stdo);
 		if (!piece->shape[i])
-			return (-1);
+			return (MALLOC_ERR);
 		j = -1;
 		while (++j < piece->col)
 			start_point(info, piece, i, j);
@@ -59,12 +59,12 @@ int	piece_info(t_info *info, t_piece *piece)
 	i = 0;
 	stdo = NULL;
 	if (get_next_line(0, &stdo) < 1)
-		return (-2);
+		return (GNL_ERR);
 	while (ft_strncmp(stdo, "Piece", 5) != 0)
 	{
 		ft_strdel(&stdo);
 		if (get_next_line(0, &stdo) < 1)
-			return (-2);
+			return (GNL_ERR);
 	}
 	while (!ft_isdigit(stdo[i]))
 		i++;
@@ -75,7 +75,7 @@ int	piece_info(t_info *info, t_piece *piece)
 	ft_strdel(&stdo);
 	piece->shape = (char **)malloc(sizeof(char *) * piece->row);
 	if (!piece->shape)
-		return (-1);
+		return (MALLOC_ERR);
 	i = -1;
 	return (shape_info(info, piece, i));
 }

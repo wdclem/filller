@@ -6,7 +6,7 @@
 /*   By: ccariou <ccariou@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 09:38:19 by ccariou           #+#    #+#             */
-/*   Updated: 2022/10/03 11:26:41 by ccariou          ###   ########.fr       */
+/*   Updated: 2022/10/06 10:24:56 by ccariou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_freearray(void **array, int n)
 	while (i < n)
 	{
 		free(array[i]);
+		array[i] = NULL;
 		i++;
 	}
 	free(array);
