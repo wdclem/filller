@@ -11,9 +11,11 @@ In the case where no custom board is made, could consider remove memory allocati
 I decided to go for it as a way to practice, in my opinion program would be better without.
 
 ##HOW TO:
+First make to create executable
 ```
 make
 ```
+
 To launch the game (against player hcao on map00)
 ```
 ./resources/filler_vm -p1 ./ccariou.filler -p2 ./resources/players/hcao.filler -v -f ./resources/maps/map00
