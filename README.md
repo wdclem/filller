@@ -20,8 +20,8 @@ To launch the game (against player hcao on map00)
 ```
 ./resources/filler_vm -p1 ./ccariou.filler -p2 ./resources/players/hcao.filler -v -f ./resources/maps/map00
 ```
-![img](./image1.png | width = 55) 
-![img](./image2.png | width = 60)
+![](./image1.png size=250x250) 
+![](./image2.png size=250x250)
 
 Script available to simulate multiple game (result in SCORE)
 To play 5 games on all map against all opponents :
