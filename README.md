@@ -1,4 +1,4 @@
-# filller
+# Filler
 
 Filler is an algorithmic game which consists in filling a grid of a known size in advance
 with pieces of random size and shapes, without the pieces being stacked more than one
@@ -12,7 +12,7 @@ Used a pretty simple method to check the board, and two while statement to loop 
 In the case where no custom board is made, could consider remove memory allocation.
 I decided to go for it as a way to practice, in my opinion program would be better without.
 
-##HOW TO:
+## HOW TO:
 First make to create executable
 ```
 make
